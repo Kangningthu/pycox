@@ -4,8 +4,8 @@ import torch
 from torch import nn
 import torchtuples as tt
 
-from pycox import models
-from pycox.preprocessing.label_transforms import LabTransCoxTime
+from pycox_2 import models
+from pycox_2.preprocessing.label_transforms import LabTransCoxTime
 
 class CoxTime(models.cox_cc._CoxCCBase):
     """The Cox-Time model from [1]. A relative risk model without proportional hazards, trained
@@ -23,7 +23,7 @@ class CoxTime(models.cox_cc._CoxCCBase):
             If 'string': string is passed to torch.device('string').
         shrink {float} -- Shrinkage that encourage the net got give g_case and g_control
             closer to zero (a regularizer in a sense). (default: {0.})
-        labtrans {pycox.preprocessing.label_tranforms.LabTransCoxTime} -- A object for transforming
+        labtrans {pycox_2.preprocessing.label_tranforms.LabTransCoxTime} -- A object for transforming
             durations. Useful for prediction as we can obtain durations on the original scale.
             (default: {None})
 

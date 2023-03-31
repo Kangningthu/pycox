@@ -1,7 +1,7 @@
-from pycox.datasets import from_deepsurv
-from pycox.datasets import from_rdatasets
-from pycox.datasets import from_kkbox
-from pycox.datasets import from_simulations
+from pycox_2.datasets import from_deepsurv
+from pycox_2.datasets import from_rdatasets
+from pycox_2.datasets import from_kkbox
+from pycox_2.datasets import from_simulations
 
 
 support = from_deepsurv._Support()

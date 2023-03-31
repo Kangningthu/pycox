@@ -1,9 +1,9 @@
 import pandas as pd
 import torchtuples as tt
-from pycox import models
-from pycox.models.utils import pad_col
-from pycox.preprocessing import label_transforms
-from pycox.models.interpolation import InterpolatePMF
+from pycox_2 import models
+from pycox_2.models.utils import pad_col
+from pycox_2.preprocessing import label_transforms
+from pycox_2.models.interpolation import InterpolatePMF
 
 
 class PMFBase(models.base.SurvBase):

@@ -4,8 +4,8 @@ This method is not smart to use!!!!!!!
 """
 import pandas as pd
 import torch
-from pycox import models
-from pycox.preprocessing import label_transforms
+from pycox_2 import models
+from pycox_2.preprocessing import label_transforms
 
 
 class BCESurv(models.base.SurvBase):

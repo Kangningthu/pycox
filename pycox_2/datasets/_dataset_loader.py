@@ -1,13 +1,13 @@
 from pathlib import Path
 import pandas as pd
-import pycox
+import pycox_2
 import os
 
 _DATA_OVERRIDE = os.environ.get('PYCOX_DATA_DIR', None)
 if _DATA_OVERRIDE:
     _PATH_DATA = Path(_DATA_OVERRIDE)
 else:
-    _PATH_ROOT = Path(pycox.__file__).parent
+    _PATH_ROOT = Path(pycox_2.__file__).parent
     _PATH_DATA = _PATH_ROOT / 'datasets' / 'data'
 _PATH_DATA.mkdir(parents=True, exist_ok=True)
 

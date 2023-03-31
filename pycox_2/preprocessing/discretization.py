@@ -1,7 +1,7 @@
 import warnings
 import numpy as np
 import pandas as pd
-from pycox import utils
+from pycox_2 import utils
 
 
 def make_cuts(n_cuts, scheme, durations, events, min_=0., dtype='float64'):
@@ -126,7 +126,8 @@ class DiscretizeUnknownC(_OnlyTransform):
             raise ValueError("`duration` contains larger values than cuts. Set `right_censor`=True to censor these")
         td = np.zeros_like(duration)
         c = event == False
-        td[event] = discretize(duration[event], self.cuts, side='right', error_on_larger=True)
+        if event.any():
+            td[event] = discretize(duration[event], self.cuts, side='right', error_on_larger=True)
         if c.any():
             td[c] = discretize(duration[c], self.cuts, side=self.censor_side, error_on_larger=True)
         return td, event.astype(dtype_event)

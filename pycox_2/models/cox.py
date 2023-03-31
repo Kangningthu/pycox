@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import torch
 import torchtuples as tt
-from pycox import models
+from pycox_2 import models
 import torchtuples.callbacks as cb
 
 def search_sorted_idx(array, values):
@@ -104,6 +104,8 @@ class _CoxBase(models.base.SurvBase):
                 stop = self.callbacks.on_epoch_end()
         self.callbacks.on_fit_end()
         return self.log
+
+
     def _compute_baseline_hazards(self, input, df, max_duration, batch_size, eval_=True, num_workers=0):
         raise NotImplementedError
 

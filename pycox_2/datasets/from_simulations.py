@@ -3,8 +3,8 @@
 
 import numpy as np
 import pandas as pd
-from pycox import simulations
-from pycox.datasets._dataset_loader import _DatasetLoader
+from pycox_2 import simulations
+from pycox_2.datasets._dataset_loader import _DatasetLoader
 
 class _SimDataset(_DatasetLoader):
     col_duration = 'duration'
@@ -39,7 +39,7 @@ class _RRNLNPH(_SimDataset):
     relative risk non-linear non-proportional hazards model (RRNLNPH).
     The full details are given in the paper [1].
 
-    The dataset is created with `pycox.simulations.SimStudyNonLinearNonPH` (see
+    The dataset is created with `pycox_2.simulations.SimStudyNonLinearNonPH` (see
     `rr_nl_nph._simulate_data`).
 
     Variables:
@@ -57,7 +57,7 @@ class _RRNLNPH(_SimDataset):
             the censoring times.
 
     To generate more data:
-        >>> from pycox.simulations import SimStudyNonLinearNonPH
+        >>> from pycox_2.simulations import SimStudyNonLinearNonPH
         >>> n = 10000
         >>> sim = SimStudyNonLinearNonPH()
         >>> data = sim.simulate(n)
@@ -84,7 +84,7 @@ class _SAC3(_SimDataset):
     """Dataset from simulation study in "Continuous and Discrete-Time Survival Prediction
     with Neural Networks" [1].
 
-    The dataset is created with `pycox.simulations.SimStudySACConstCensor`
+    The dataset is created with `pycox_2.simulations.SimStudySACConstCensor`
     (see `sac3._simulate_data`).
 
     The full details are given in  Appendix A.1 in [1].
@@ -104,7 +104,7 @@ class _SAC3(_SimDataset):
             the censoring times.
 
     To generate more data:
-        >>> from pycox.simulations import SimStudySACCensorConst
+        >>> from pycox_2.simulations import SimStudySACCensorConst
         >>> n = 10000
         >>> sim = SimStudySACCensorConst()
         >>> data = sim.simulate(n)
@@ -128,7 +128,7 @@ class _SAC3(_SimDataset):
 
 class _SACAdmin5(_SimDataset):
     """Dataset from simulation study in [1].
-    The survival function is the same as in sac3, but the censoring is administrative 
+    The survival function is the same as in sac3, but the censoring is administrative
     and determined by five covariates.
 
     Variables:
@@ -146,7 +146,7 @@ class _SACAdmin5(_SimDataset):
             the censoring times.
 
     To generate more data:
-        >>> from pycox.simulations import SimStudySACAdmin
+        >>> from pycox_2.simulations import SimStudySACAdmin
         >>> n = 10000
         >>> sim = SimStudySACAdmin()
         >>> data = sim.simulate(n)
