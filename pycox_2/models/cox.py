@@ -5,6 +5,7 @@ import pandas as pd
 import torch
 import torchtuples as tt
 from pycox import models
+import torchtuples.callbacks as cb
 
 def search_sorted_idx(array, values):
     '''For sorted array, get index of values.
@@ -52,6 +53,57 @@ class _CoxBase(models.base.SurvBase):
                            num_workers, shuffle, metrics, val_data, val_batch_size,
                            **kwargs)
 
+    def fit_dataloader(
+        self, dataloader, epochs=1, callbacks=None, verbose=True, metrics=None, val_dataloader=None
+    ):
+        """Fit a dataloader object.
+        See 'fit' for tensors and np.arrays.
+        Arguments:
+            dataloader {dataloader} -- A dataloader that gives (input, target).
+        Keyword Arguments:
+            epochs {int} -- Number of epochs (default: {1})
+            callbacks {list} -- list of callbacks (default: {None})
+            verbose {bool} -- Print progress (default: {True})
+        Returns:
+            TrainingLogger -- Training log
+        """
+        self._setup_train_info(dataloader)
+        self.metrics = self._setup_metrics(metrics)
+        self.log.verbose = verbose
+        self.val_metrics.dataloader = val_dataloader
+        if callbacks is None:
+            callbacks = []
+        self.callbacks = cb.TrainingCallbackHandler(
+            self.optimizer, self.train_metrics, self.log, self.val_metrics, callbacks
+        )
+        self.callbacks.give_model(self)
+
+        stop = self.callbacks.on_fit_start()
+        for _ in range(epochs):
+            if stop:
+                break
+            stop = self.callbacks.on_epoch_start()
+            if stop:
+                break
+            for data in dataloader:
+                stop = self.callbacks.on_batch_start()
+                if stop:
+                    break
+                self.optimizer.zero_grad()
+                self.batch_metrics = self.compute_metrics(data, self.metrics)
+                self.batch_loss = self.batch_metrics["loss"]
+                self.batch_loss.backward()
+                stop = self.callbacks.before_step()
+                if stop:
+                    break
+                self.optimizer.step()
+                stop = self.callbacks.on_batch_end()
+                if stop:
+                    break
+            else:
+                stop = self.callbacks.on_epoch_end()
+        self.callbacks.on_fit_end()
+        return self.log
     def _compute_baseline_hazards(self, input, df, max_duration, batch_size, eval_=True, num_workers=0):
         raise NotImplementedError
 
